@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sbb-jar PUBLIC "-//Sun Microsystems, Inc.//DTD JAIN SLEE SBB 1.1//EN"
+                         "http://java.sun.com/dtd/slee-sbb-jar_1_1.dtd">
+<sbb-jar>
+	<sbb id="parentsbb">
+		<description>Este e meu primeiro projeto Slee</description>
+		<sbb-name>meuTeste</sbb-name>
+		<sbb-vendor>br.com.algartelecom.meuPrimeiroProjeto</sbb-vendor>
+		<sbb-version>1.0.0</sbb-version>
+		<sbb-alias>meuTeste</sbb-alias>
+
+		<sbb-classes>
+			<sbb-abstract-class>
+				<sbb-abstract-class-name>br.com.algartelecom.meuPrimeiroProjeto.MeuTesteSbb</sbb-abstract-class-name>
+
+				<cmp-field>
+					<cmp-field-name>numberB</cmp-field-name>
+				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>numberA</cmp-field-name>
+				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>dialogA</cmp-field-name>
+				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>dialogB</cmp-field-name>
+				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>pAsserted</cmp-field-name>
+				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>pPreferred</cmp-field-name>
+				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>hrefA</cmp-field-name>
+				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>hrefB</cmp-field-name>
+				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>sdpB</cmp-field-name>
+				</cmp-field>
+			</sbb-abstract-class>
+		</sbb-classes>
+
+		<!-- chamada entrantes -->
+		<event event-direction="Receive" initial-event="True">
+			<event-name>Invite</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.message.Request.INVITE</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+			<initial-event-select variable="ActivityContext" />
+		</event>
+		
+		<event event-direction="Receive" initial-event="False">
+			<event-name>PrackRequest</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.message.Request.PRACK</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		
+		<event event-direction="Receive" initial-event="False">
+			<event-name>PrackDialog</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.Dialog.PRACK</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		
+		<event event-direction="Receive" initial-event="False">
+			<event-name>ReInvite</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.Dialog.INVITE</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+
+		<event event-direction="Receive" initial-event="False">
+			<event-name>Cancel</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.message.Request.CANCEL</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+
+		<event event-direction="Receive" initial-event="False">
+			<event-name>Ack</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.Dialog.ACK</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+
+		<event event-direction="Receive" initial-event="False">
+			<event-name>Bye</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.Dialog.BYE</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		
+		<event event-direction="Receive" initial-event="False">
+			<event-name>InfoDialog</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.Dialog.INFO</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+
+		<event event-direction="Receive" initial-event="False">
+			<event-name>2xxCall</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.message.Response.SUCCESS</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		<event event-direction="Receive" initial-event="False">
+			<event-name>1xxCall</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.message.Response.PROVISIONAL</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		<event event-direction="Receive" initial-event="False">
+			<event-name>4xxCall</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.message.Response.CLIENT_ERROR</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		<event event-direction="Receive" initial-event="False">
+			<event-name>5xxCall</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.message.Response.SERVER_ERROR</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		<event event-direction="Receive" initial-event="False">
+			<event-name>6xxCall</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.message.Response.GLOBAL_FAILURE</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		<event event-direction="Receive" initial-event="False">
+			<event-name>TransactionTimeoutEvent</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.Timeout.TRANSACTION</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		<event event-direction="Receive" initial-event="False">
+			<event-name>TimeoutDialog</event-name>
+			<event-type-ref>
+				<event-type-name>javax.sip.Timeout.Dialog</event-type-name>
+				<event-type-vendor>net.java.slee</event-type-vendor>
+				<event-type-version>1.2</event-type-version>
+			</event-type-ref>
+		</event>
+		
+		<!-- Timer para atender a chamada-->
+		<event event-direction="Receive" initial-event="False">
+			<event-name>TimerEvent</event-name>
+			<event-type-ref>
+				<event-type-name>javax.slee.facilities.TimerEvent</event-type-name>
+				<event-type-vendor>javax.slee</event-type-vendor>
+				<event-type-version>1.0</event-type-version>
+			</event-type-ref>
+		</event>
+
+
+
+
+
+
+
+
+
+
+		<!-- Evento HTTP-SERVLET RA BIND -->
+		<resource-adaptor-type-binding>
+			<resource-adaptor-type-ref>
+				<resource-adaptor-type-name>HttpServletResourceAdaptorType</resource-adaptor-type-name>
+				<resource-adaptor-type-vendor>org.mobicents</resource-adaptor-type-vendor>
+				<resource-adaptor-type-version>1.0</resource-adaptor-type-version>
+			</resource-adaptor-type-ref>
+			<activity-context-interface-factory-name>slee/resources/mobicents/httpservlet/acifactory</activity-context-interface-factory-name>
+			<resource-adaptor-entity-binding>
+				<resource-adaptor-object-name>slee/resources/mobicents/httpservlet/sbbrainterface</resource-adaptor-object-name>
+				<resource-adaptor-entity-link>HttpServletRA</resource-adaptor-entity-link>
+			</resource-adaptor-entity-binding>
+		</resource-adaptor-type-binding>
+
+
+		<!-- Evento HTTP-CLIENT RA BIND -->
+		<resource-adaptor-type-binding>
+			<resource-adaptor-type-ref>
+				<resource-adaptor-type-name>HttpClientResourceAdaptorType</resource-adaptor-type-name>
+				<resource-adaptor-type-vendor>org.mobicents</resource-adaptor-type-vendor>
+				<resource-adaptor-type-version>4.0</resource-adaptor-type-version>
+			</resource-adaptor-type-ref>
+			<activity-context-interface-factory-name>slee/resources/http-client/acifactory</activity-context-interface-factory-name>
+			<resource-adaptor-entity-binding>
+				<resource-adaptor-object-name>slee/resources/http-client/sbbinterface</resource-adaptor-object-name>
+				<resource-adaptor-entity-link>HttpClientResourceAdaptor</resource-adaptor-entity-link>
+			</resource-adaptor-entity-binding>
+		</resource-adaptor-type-binding>
+
+
+
+
+		<resource-adaptor-type-binding>
+
+			<resource-adaptor-type-ref>
+
+				<resource-adaptor-type-name>
+
+					JAIN SIP
+
+				</resource-adaptor-type-name>
+
+				<resource-adaptor-type-vendor>
+
+					javax.sip
+
+				</resource-adaptor-type-vendor>
+
+				<resource-adaptor-type-version>
+
+					1.2
+
+				</resource-adaptor-type-version>
+
+			</resource-adaptor-type-ref>
+
+			<activity-context-interface-factory-name>
+
+				slee/resources/jainsip/1.2/acifactory
+
+			</activity-context-interface-factory-name>
+
+			<resource-adaptor-entity-binding>
+
+				<resource-adaptor-object-name>
+
+					slee/resources/jainsip/1.2/provider
+
+				</resource-adaptor-object-name>
+
+				<resource-adaptor-entity-link>
+
+					SipRA
+
+				</resource-adaptor-entity-link>
+
+			</resource-adaptor-entity-binding>
+
+		</resource-adaptor-type-binding>
+
+
+
+	</sbb>
+</sbb-jar>

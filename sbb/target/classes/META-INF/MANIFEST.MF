@@ -1,0 +1,31 @@
+Manifest-Version: 1.0
+Built-By: laercio
+Build-Jdk: 1.8.0_101
+Created-By: Apache Maven Bundle Plugin
+Bundle-Description: JAIN SLEE Project created with Mobicents EclipSLEE
+  v2.1.0.FINAL
+Implementation-Title: org.mobicents:MeuPrimeiroProjeto-sbb
+Bundle-License: http://www.gnu.org/licenses/lgpl-2.1.html
+Bundle-SymbolicName: org.mobicents.MeuPrimeiroProjeto-sbb
+Implementation-Version: 1.0
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1473941109127
+Implementation-Vendor-Id: JBoss, a Red Hat division
+Import-Package: gov.nist.javax.sip.header.ims,javax.sip,javax.sip.addr
+ ess,javax.sip.header,javax.sip.message,javax.slee,javax.slee.faciliti
+ es,javax.slee.nullactivity,javax.slee.resource,net.java.slee.resource
+ .sip,org.apache.http,org.apache.http.client.methods,org.apache.http.e
+ ntity,org.apache.http.impl.client,org.apache.http.util,org.apache.log
+ 4j,org.mobicents.slee
+Tool: Bnd-1.15.0
+Export-Package: br.com.algartelecom.meuPrimeiroProjeto;uses:="javax.sl
+ ee.nullactivity,gov.nist.javax.sip.header.ims,org.mobicents.slee,net.
+ java.slee.resource.sip,javax.slee,javax.sip.address,javax.sip.message
+ ,javax.slee.facilities,javax.sip.header,utils,javax.slee.resource,org
+ .apache.log4j,javax.sip",utils;uses:="org.apache.http.entity,org.apac
+ he.http.util,org.apache.http.client.methods,org.apache.http,org.apach
+ e.http.impl.client,br.com.algartelecom.meuPrimeiroProjeto"
+Bundle-Version: 1.0.0
+Bundle-Name: Mobicents :: MeuPrimeiroProjeto-sbb v1.0
+Implementation-URL: http://www.mobicents.org
+
