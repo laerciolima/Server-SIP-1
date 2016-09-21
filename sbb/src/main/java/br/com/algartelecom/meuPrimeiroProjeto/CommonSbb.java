@@ -78,6 +78,10 @@ public abstract class CommonSbb implements Sbb {
 
 	public abstract void setHrefA(String hrefA);
 	
+	public abstract String getSdpA();
+
+	public abstract void setSdpA(String sdpA);
+	
 	public abstract String getHrefB();
 
 	public abstract void setHrefB(String hrefB);
@@ -185,6 +189,7 @@ public abstract class CommonSbb implements Sbb {
 	 * @param event
 	 * @param sdp
 	 */
+	
 	public void send180(byte[] sdp, String contentType) throws Exception {
 		if (((DialogActivity) getDialogA().getActivity()).getState() == DialogState.TERMINATED) {
 			return;

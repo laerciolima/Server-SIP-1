@@ -40,6 +40,9 @@
 				<cmp-field>
 					<cmp-field-name>sdpB</cmp-field-name>
 				</cmp-field>
+				<cmp-field>
+					<cmp-field-name>sdpA</cmp-field-name>
+				</cmp-field>
 			</sbb-abstract-class>
 		</sbb-classes>
 

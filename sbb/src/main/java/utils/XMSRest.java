@@ -37,6 +37,7 @@ public class XMSRest implements Observer {
 			prop.setProperty("PlayFile", playfile);
 			prop.store(new FileOutputStream("config.properties"), null);
 			// return;
+			
 
 			// This will load the properties from the config file
 			/*
@@ -48,7 +49,9 @@ public class XMSRest implements Observer {
 			System.out.println("Application Properties Set to:\n" + prop);
 
 			XMSEventListener el = new XMSEventListener();
+			
 
+			
 			// Step 2: Have the EventListener connect to the XMS the
 			// destination ip address and port are configurable above
 			el.ConnectToXMS(xmsip, port);
@@ -56,7 +59,7 @@ public class XMSRest implements Observer {
 			// Step 3: Setup this class as an Observer of the EL so that it can
 			// be notified when the events come in on the stream. When an
 			// event is received the Update Method will be called
-			el.addObserver(this);
+			//el.addObserver(this);
 
 			// Step 4: Start the EL listening for new events
 			 el.StartListening();

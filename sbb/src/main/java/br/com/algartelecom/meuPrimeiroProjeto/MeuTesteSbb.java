@@ -45,7 +45,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Recebe pedido de INVITE da NGN e inicia a aplicação URA ou CS
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -63,8 +63,8 @@ public abstract class MeuTesteSbb extends CommonSbb {
 			String from = fromSipURI.toString();
 			setNumberA(fromSipURI.getUser()); // Salva numero de A na Sessao
 
-			replyToRequestEvent(event, Response.TRYING);
-			replyToRequestEvent(event, Response.RINGING); // Retorno 100
+			replyToRequestEvent(event, Response.TRYING);// Retorn 100
+			replyToRequestEvent(event, Response.RINGING); // Retorn 180
 
 			System.out.println("inicio###############################################");
 			String sdp = new String(event.getRequest().getRawContent());
@@ -72,27 +72,21 @@ public abstract class MeuTesteSbb extends CommonSbb {
 			sdp = sdp.replaceAll("\r\n", "&#xD;&#xA;");
 
 			String req = "<web_service version=\"1.0\"><call sdp=\"" + sdp
-					+ "\" media=\"audio\" signaling=\"no\"/></web_service>";
+					+ "\" media=\"audiovideo\" signaling=\"no\"/></web_service>";
 
-			System.out.println("+++++++++" + req + "++++++++");
 			String response = xmsrest.sendRequestPOST("/default/calls", req);
-
 			setHrefA(xmsrest.getHrefFromResponse(response));
-
-			req = "<web_service version=\"1.0\"><call sdp=\"\" media=\"audio\" signaling=\"no\"/></web_service>";
-
-			System.out.println("+++++++++" + req + "++++++++");
-			response = xmsrest.sendRequestPOST("/default/calls", req);
-
-			setHrefB(xmsrest.getHrefFromResponse(response));
-			setSdpB(xmsrest.getSdpFromResponse(response).replaceAll("&#xD;&#xA;", "\r\n"));
+			setSdpA(xmsrest.getSdpFromResponse(response).replaceAll("&#xD;&#xA;", "\r\n"));
 
 			System.out.println("fim###############################################");
 
-			getTimerFacility().setTimer(aci, null, System.currentTimeMillis() + 5000, getTimerOptions());
+			getTimerFacility().setTimer(aci, null, System.currentTimeMillis() + 5000, getTimerOptions()); // RINGING
+																											// durante
+																											// 5
+																											// segundos
 
 		} catch (Exception e) {
-			logger.error("Erro ao completar ao atender a chamada: ", e);
+			logger.error("Erro ao completar atender a chamada: ", e);
 			replyToRequestEvent(event, Response.NOT_FOUND);
 			dettachAllActive();
 		}
@@ -101,7 +95,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Recebe pedido de REINVITE da NGN e repassa para URA
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -111,7 +105,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Recebe PRACK da NGN e Devolve 200, Deve ser desenvolvido posteriormente
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -121,7 +115,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Recebe PRACK de um dialogo ja estabelecido e Devolve 200,
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -130,7 +124,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Recebe ACK
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -138,39 +132,25 @@ public abstract class MeuTesteSbb extends CommonSbb {
 		logger.debug(">>>> Chegando ACK <<<<");
 		System.out.println("################ chegou ACK");
 
-		String req = "<web_service version=\"1.0\">" + " <call>" + " <call_action>"
-				+ " <play offset=\"0s\" repeat=\"0\" delay=\"1s\" terminate_digits=\"#\" skip_interval=\"1s\">"
-				+ " <play_source audio_uri=\"file://verification/play_menu.wav\" audio_type=\"audio/x-wav\" />"
-				+ " </play>" + " </call_action>" + "</call>" + "</web_service>";
-
-		xmsrest.sendRequestPUT(getHrefA(), req);
-		
-		xmsrest.sendRequestPUT(getHrefB(), req);
-
-		req = "	<web_service version=\"1.0\">";
-		req += " <call>";
-		req += " <call_action>";
-		req += " <playrecord recording_audio_uri=\"file://recorded_file.wav\" ";
-		req += "recording_audio_type=\"audio/x-wav\"";
-		req += " max_time=\"10s\" offset=\"0s\" repeat=\"0\" delay=\"1s\"";
-		req += "terminate_digits=\"#\"";
-		req += " beep=\"yes\" barge=\"yes\" cleardigits=\"yes\" >";
-		req += " <play_source audio_uri=\"file://verification/play_menu.wav\"";
-		req += "audio_type=\"audio/x-wav\"/>";
-		req += " </playrecord>";
+		String req = "<web_service version=\"1.0\">";
+		req += "<call>";
+		req += "<call_action>";
+		req += "<play offset=\"0s\" repeat=\"0\" delay=\"1s\" terminate_digits=\"#\" skip_interval=\"1s\">";
+		req += "<play_source video_uri=\"file://verification/video_clip_nascar.vid\" video_type=\"video/x-vid\" audio_uri=\"file://verification/video_clip_nascar.wav\" audio_type=\"audio/x-wav\" />";
+		req += "<dvr_setting forward_key=\"1\" backward_key=\"2\" pause_key=\"3\" resume_key=\"4\"";
+		req += " restart_key=\"5\"/>";
+		req += " </play>";
 		req += " </call_action>";
 		req += "</call>";
 		req += "</web_service>";
 
-		
-
-		
+		xmsrest.sendRequestPUT(getHrefA(), req);
 
 	}
 
 	/**
 	 * Recebe CANCEL
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -195,7 +175,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Recebe os pedidos de BYE
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -203,13 +183,12 @@ public abstract class MeuTesteSbb extends CommonSbb {
 		logger.debug(">>>> Chegando BYE <<<<");
 		replyToRequestEvent(event, Response.OK);
 		xmsrest.sendRequestDELETE(getHrefA());
-		xmsrest.sendRequestDELETE(getHrefB());
 		finalizeTransactions();
 	}
 
 	/**
 	 * Recebe as respostas SIP de Provisionamento 1XX
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -219,7 +198,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Recebe as respostas SIP de confirmacao 2XX
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -230,7 +209,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Metodo que recebe os Erros de cliente das requisicoes SIP 4XX
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -240,7 +219,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Metodo que recebe os Erros de cliente das requisicoes SIP 5XX
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -250,7 +229,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Metodo que recebe os Erros de cliente das requisicoes SIP 6XX
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -260,7 +239,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Metodo que recebe os INFO da rede e devolve 200
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -271,7 +250,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Metodo que faz o atendimento do dialogo da ponta A com o telefone
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
@@ -294,7 +273,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 			}
 
 			String bind = getSleeSipProvider().getListeningPoints()[0].getIPAddress();
-			String sdp = getSdpB();
+			String sdp = getSdpA();
 			System.out.println("-------------------------------------SDP\n" + sdp);
 			System.out.println("\n FIMSDP -------------------------------------\n");
 			logger.info("Atendendo a chamada depois de 10 segundos");
@@ -309,7 +288,7 @@ public abstract class MeuTesteSbb extends CommonSbb {
 
 	/**
 	 * Metodo que controla os TIME-OUT das requisicoes SIP
-	 * 
+	 *
 	 * @param event
 	 * @param aci
 	 */
